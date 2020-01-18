@@ -1,27 +1,29 @@
 pipeline {
   agent any
 
-  tools {
-    maven "localMaven"
-  }
-
   stages {
     stage ('Compile Stage') {
       steps {
-        sh 'mvn clean compile'
+        withMaven(maven: 'localMaven') {
+          sh 'mvn clean compile'
+        }
       }
       
     }
 
     stage ('Testing Stage') {
       steps {
-        sh 'mvn test'
+        withMaven(maven: 'localMaven') {
+          sh 'mvn test'
+        }
       }
     }
 
     stage ('Deployment Stage') {
       steps {
-        sh 'mvn deploy'
+        withMaven(maven: 'localMaven') {
+          sh 'mvn deploy'
+        }
       }
     }
   }
